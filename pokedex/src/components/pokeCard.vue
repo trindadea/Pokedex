@@ -9,7 +9,7 @@
 
         data() {
             return {
-                id: '#',
+                id: '',
                 species: '',
                 types: [], 
                 sprite: ''
@@ -29,28 +29,33 @@
                     }
 
                     var json = await response.json();
-                    this.id += json.id;
+                    this.id = json.id;
                     this.species = json.species.name
                     this.types = json.types
-                    this.sprite = `https://unpkg.com/pokeapi-sprites@2.0.4/sprites/pokemon/other/dream-world/${json.id}.svg`
+                    this.sprite = json.sprites.other["official-artwork"].front_default
                     // console.log(this.types[0].type.name)
                 } catch (error) {
                     console.error('Erro ao buscar dados:', error);
                 }
+            },
+
+            redirectToPokePage() {
+                // Alternativamente, você pode redirecionar programaticamente usando o método push do router
+                this.$router.push(`/pokemon/${this.id}`);
             }
         }
     }
 </script>
 
 <template>
-    <div class="poke-card">
+    <div @click="redirectToPokePage" class="poke-card">
         <div class="poke-sprite">
             <img :src="this.sprite" alt="Imagem de {{ pokemon.name }}" />
         </div>
 
         <div class="poke-data">
             <span>{{ pokemon.name }}</span>
-            <span>{{ this.id }}</span>
+            <span>nº {{ this.id }}</span>
             <div>
                 <div>{{ this.species }}</div>
                 <div class="poke-type">
