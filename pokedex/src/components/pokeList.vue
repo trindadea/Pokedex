@@ -36,7 +36,7 @@ export default {
 </script>
 
 <template>
-    <div class="poke-list">
+    <div class="poke-list" ref="pokeList">
         <pokeCard v-for="(item, index) in items" :key="index" :pokemon="item" />
     </div>
 </template>

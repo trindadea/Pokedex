@@ -32,7 +32,7 @@
                     this.id += json.id;
                     this.species = json.species.name
                     this.types = json.types
-                    this.sprite = json.sprites.front_default
+                    this.sprite = `https://unpkg.com/pokeapi-sprites@2.0.4/sprites/pokemon/other/dream-world/${json.id}.svg`
                     // console.log(this.types[0].type.name)
                 } catch (error) {
                     console.error('Erro ao buscar dados:', error);
@@ -82,6 +82,7 @@
 }
 .poke-sprite img{
     width: 150px;
+    height: 150px;
 }
 
 .poke-type{
