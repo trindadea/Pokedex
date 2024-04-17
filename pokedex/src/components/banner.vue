@@ -2,11 +2,11 @@
   // Configurações do componente Vue
   export default {    
     data() {
-    return {
-      items: [],
-      random_poke_name: '',
-      random_poke_sprite: ''
-    };
+      return {
+        items: [],
+        random_poke_name: '',
+        random_poke_sprite: ''
+      };
     },
 
     mounted() {
