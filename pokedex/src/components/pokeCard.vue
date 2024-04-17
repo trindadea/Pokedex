@@ -17,7 +17,7 @@
         },
 
         mounted() {
-        this.fetchData(this.pokemon.name);
+            this.fetchData(this.pokemon.name);
         },
 
         methods: {
