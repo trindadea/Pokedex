@@ -1,46 +1,24 @@
 <template>
     <div>
-        <input type="text" v-model="searchQuery" placeholder="Pesquisar Pokémon" @input="search">
-        <div v-if="filteredItems.length > 0">
-            <pokeCard v-for="(item, index) in filteredItems" :key="index" :pokemon="item" />
-        </div>
-        <div v-else>
-            <p>Nenhum Pokémon encontrado.</p>
-        </div>
+        <input type="text" v-model="query" placeholder="Pesquise por Nome ou Número" @input="search">
     </div>
 </template>
 
 <script>
-import pokeCard from './pokeCard.vue';
-import { mapState } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
-    components: {
-        pokeCard
-    },
-
     data() {
         return {
-            searchQuery: '', // A variável que armazenará o texto da pesquisa
-            filteredItems: [] // Lista filtrada de Pokémon com base na pesquisa
+            query: '', // A variável que armazenará o texto da pesquisa
         };
     },
 
-    computed: {
-        ...mapState(['pokemonItems']) // Mapeia o estado global pokemonItems para a variável computada pokemonItems
-    },
-
     methods: {
+        ...mapActions(['filterItems']), // Mapeia a ação filterItems da store Vuex para o método search deste componente
         search() {
-            // Filtrar os Pokémon com base na consulta de pesquisa (searchQuery)
-            this.filteredItems = this.pokemonItems.filter(pokemon => {
-                // Lógica de filtro
-            });
+            this.filterItems(this.query);
         }
     }
 };
 </script>
-
-<style scoped>
-/* Estilos específicos para este componente, se necessário */
-</style>

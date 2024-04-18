@@ -17,9 +17,9 @@ export default {
     },
 
     computed: {
-        ...mapState(['pokemonItems']), // Mapeia o estado global pokemonItems para a variável computada pokemonItems
+        ...mapState(['filteredItems']), // Mapeia o estado global filteredItems para a variável computada visibleItems
         visibleItems() {
-            return this.pokemonItems.slice(0, this.itemsPerPage);
+            return this.filteredItems.slice(0, this.itemsPerPage);
         }
     },
 

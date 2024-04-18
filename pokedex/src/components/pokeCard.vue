@@ -1,50 +1,55 @@
 <script>
-    export default {
-        props: {
-            pokemon: {
-                type: Object,
-                required: true
-            }
-        },
+export default {
+    props: {
+        pokemon: {
+            type: Object,
+            required: true
+        }
+    },
 
-        data() {
-            return {
-                id: '',
-                species: '',
-                types: [], 
-                sprite: ''
-            };
-        },
+    data() {
+        return {
+            id: '',
+            species: '',
+            types: [], 
+            sprite: ''
+        };
+    },
 
-        mounted() {
-            this.fetchPokemon(this.pokemon.name);
-        },
-
-        methods: {
-            async fetchPokemon(name) {
-                try {
-                    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
-                    if (!response.ok) {
-                    throw new Error(`Falha ao buscar os dados de ${name}`);
-                    }
-
-                    var json = await response.json();
-                    this.id = json.id;
-                    this.species = json.species.name
-                    this.types = json.types
-                    this.sprite = json.sprites.other["official-artwork"].front_default
-                    // console.log(this.types[0].type.name)
-                } catch (error) {
-                    console.error('Erro ao buscar dados:', error);
-                }
-            },
-
-            redirectToPokePage() {
-                // Alternativamente, você pode redirecionar programaticamente usando o método push do router
-                this.$router.push(`/pokemon/${this.id}`);
+    // watcher é usado para observar as mudanças na prop 'pokemon'
+    watch: {
+        pokemon: {
+            immediate: true,
+            // Função que será executada sempre que a propriedade pokemon for alterada (filtragem por pesquisa)
+            handler(newPokemon) {
+                this.fetchPokemon(newPokemon.name);
             }
         }
+    },
+
+    methods: {
+        async fetchPokemon(name) {
+            try {
+                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+                if (!response.ok) {
+                    throw new Error(`Falha ao buscar os dados de ${name}`);
+                }
+
+                const json = await response.json();
+                this.id = json.id;
+                this.species = json.species.name;
+                this.types = json.types;
+                this.sprite = json.sprites.other['official-artwork'].front_default;
+            } catch (error) {
+                console.error('Erro ao buscar dados:', error);
+            }
+        },
+
+        redirectToPokePage() {
+            this.$router.push(`/pokemon/${this.id}`);
+        }
     }
+};
 </script>
 
 <template>
