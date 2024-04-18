@@ -4,6 +4,7 @@
         created() {
             // Chamar a ação fetchPokemonItems quando o componente a aplicação é iniciada
             this.$store.dispatch('fetchPokemonItems');
+            this.$store.dispatch('fetchPokemonTypes');
         }
 }
 </script>

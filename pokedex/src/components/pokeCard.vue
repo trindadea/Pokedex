@@ -1,4 +1,6 @@
 <script>
+import { mapState } from 'vuex';
+
 export default {
     props: {
         pokemon: {
@@ -40,6 +42,8 @@ export default {
                 this.species = json.species.name;
                 this.types = json.types;
                 this.sprite = json.sprites.other['official-artwork'].front_default;
+                
+                this.backgroundColor()
             } catch (error) {
                 console.error('Erro ao buscar dados:', error);
             }
@@ -47,13 +51,28 @@ export default {
 
         redirectToPokePage() {
             this.$router.push(`/pokemon/${this.id}`);
+        },
+
+        backgroundColor() {
+            console.log(this.types)
+            const { pokemonTypes } = this.$store.state;
+            
+            const primaryType = this.types[0].type.name;
+            const foundType = pokemonTypes.find(type => type.name === primaryType);
+
+            // Retorna a cor primária correspondente ao tipo do Pokémon
+            const backgroundColor = foundType.color.primary
+                
+            // Define a cor de fundo da div pokeCard
+            this.$refs.pokeCard.style.backgroundColor = backgroundColor;
         }
-    }
+    },
+
 };
 </script>
 
 <template>
-    <div @click="redirectToPokePage" class="poke-card">
+    <div ref="pokeCard" @click="redirectToPokePage" class="poke-card">
         <div class="poke-sprite">
             <img :src="this.sprite" alt="Imagem de {{ pokemon.name }}" />
         </div>
@@ -79,7 +98,7 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: aliceblue;
+    /* background-color: aliceblue; */
     width: 200px;
     height: calc(200px * 16 / 9); /* Calcula a altura com base na largura para manter a proporção 16x9 */
     border-radius: 1rem;

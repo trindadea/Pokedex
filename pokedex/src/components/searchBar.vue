@@ -1,9 +1,3 @@
-<template>
-    <div>
-        <input type="text" v-model="query" placeholder="Pesquise por Nome ou Número" @input="search">
-    </div>
-</template>
-
 <script>
 import { mapActions } from 'vuex';
 
@@ -22,3 +16,9 @@ export default {
     }
 };
 </script>
+
+<template>
+    <div>
+        <input type="text" v-model="query" placeholder="Pesquise por Nome ou Número" @input="search">
+    </div>
+</template>

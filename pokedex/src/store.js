@@ -1,10 +1,13 @@
-import { createStore } from 'vuex';
+import { createStore} from 'vuex';
+import { pokemonItems, pokemonTypes, getColors } from './pokeUtils.js';
 
 export default createStore({
     // Propriedades de estado
     state: {
-        pokemonItems: [], // Lista de todos os Pokemons (nome e id's)
-        filteredItems: [] // Lista de pokemons filtrados
+        pokemonItems, // Lista de todos os Pokemons (nome e id's)
+        filteredItems: [], // Lista de Pokemons filtrados
+
+        pokemonTypes, //Lista de tipos de Pokemons
     },
 
     // Mutações são funções que modificam as propriedades de estado de forma síncrona
@@ -16,7 +19,11 @@ export default createStore({
 
         setFilteredItems(state, items) {
             state.filteredItems = items;
-        }
+        },
+
+        setPokemonTypes(state, types) {
+            state.pokemonTypes = types;
+        },
     },
 
     actions: {
@@ -60,7 +67,27 @@ export default createStore({
         
                 commit('setFilteredItems', filteredItems);
             }
-        }
+        },
+
+        async fetchPokemonTypes({ commit }) {
+            try {
+                const response = await fetch('https://pokeapi.co/api/v2/type');
+                if (!response.ok) {
+                    throw new Error('Falha ao buscar os tipos');
+                }
+                const data = await response.json();
+
+                const types = data.results.map(type => {
+                return {
+                    name: type.name,
+                    color: getColors(type.name)
+                };
+            });
+            commit('setPokemonTypes', types);
+            } catch (error) {
+                console.error('Erro ao buscar os tipos:', error);
+            }
+        },
         
     }
 });
