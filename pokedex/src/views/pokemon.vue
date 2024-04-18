@@ -15,11 +15,11 @@
 
         mounted() {
             const route = useRoute();
-            this.fetchPokeData(route.params.id);
+            this.fetchPokemon(route.params.id);
         },
 
         methods: {
-            async fetchPokeData(id) {
+            async fetchPokemon(id) {
                 try {
                     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
                     if (!response.ok) {

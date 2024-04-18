@@ -17,11 +17,11 @@
         },
 
         mounted() {
-            this.fetchData(this.pokemon.name);
+            this.fetchPokemon(this.pokemon.name);
         },
 
         methods: {
-            async fetchData(name) {
+            async fetchPokemon(name) {
                 try {
                     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
                     if (!response.ok) {

@@ -1,34 +1,45 @@
 <script>
-import pokeCard from './pokeCard.vue';
+import { mapState } from 'vuex';
 
-// Configurações do componente Vue
+import PokeCard from './pokeCard.vue';
+import Header from './header.vue';
+
 export default {
     components: {
-        pokeCard
+        PokeCard,
+        Header
     },
 
     data() {
         return {
-            items: []
+            itemsPerPage: 30
         };
     },
 
-    mounted() {
-        this.fetchPokemon();
+    computed: {
+        ...mapState(['pokemonItems']), // Mapeia o estado global pokemonItems para a variável computada pokemonItems
+        visibleItems() {
+            return this.pokemonItems.slice(0, this.itemsPerPage);
+        }
+    },
+
+    mounted() {    
+        window.addEventListener('scroll', this.handleScroll);
     },
     
     methods: {
-        async fetchPokemon() {
-            try {
-                const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=30&offset=0');
-                if (!response.ok) {
-                throw new Error('Falha ao buscar os dados');
-                }
+        async loadMoreItems() {
+            this.itemsPerPage += 30;
+        },
 
-                var json = await response.json();
-                this.items = json.results;
-            } catch (error) {
-                console.error('Erro ao buscar dados:', error);
+        handleScroll() {
+            const pokeList = this.$refs.pokeList;
+            const scrollPosition = window.scrollY + window.innerHeight;
+            const listBottom = pokeList.offsetTop + pokeList.offsetHeight;
+
+            // Se estiver perto do final da lista, carregar mais itens
+            if (scrollPosition > listBottom - 300) {
+                this.loadMoreItems();
             }
         }
     }
@@ -36,8 +47,9 @@ export default {
 </script>
 
 <template>
+    <Header />
     <div class="poke-list" ref="pokeList">
-        <pokeCard v-for="(item, index) in items" :key="index" :pokemon="item" />
+        <PokeCard v-for="(item, index) in visibleItems" :key="index" :pokemon="item" />
     </div>
 </template>
 
@@ -47,5 +59,4 @@ export default {
     flex-wrap: wrap;
     gap: 30px;
 }
-
 </style>
