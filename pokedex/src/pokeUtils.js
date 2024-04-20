@@ -1,6 +1,6 @@
 export const PokemonList = [];
 export const PokemonByType = [];
-export const PokemonByName = [];
+export const PokemonByQuery = [];
 export const filteredItems = [];
 
 export const PokemonTypes = [];

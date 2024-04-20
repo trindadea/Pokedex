@@ -1,45 +1,31 @@
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
     data() {
         return {
-        selectedType: ''
+            selectedType: ''
         };
     },
 
-    // Mapeia o estado global PokemonTypes para uma propriedade computada
     computed: {
         ...mapState(['PokemonTypes']),
     },
     
     methods: {
-        async handleTypeChange() {
-            try {
-                const response = await fetch(`https://pokeapi.co/api/v2/type/${this.selectedType}`);
-                if (!response.ok) {
-                    throw new Error('Falha ao buscar tipos');
-                }
+        ...mapMutations(['setSelectedType']), // Mapeia a mutation setSelectedType da store o método updateType deste componente
+        async updateType() {
+            this.setSelectedType(this.selectedType);
 
-                const json = await response.json();
-                
-                // Mapeia os resultados para obter a lista de Pokémons
-                const pokemonList = json.pokemon.map(item => ({
-                    name: item.pokemon.name,
-                    url: item.pokemon.url
-                }));
-
-                this.$store.commit('setFilteredItems', pokemonList);
-            } catch (error) {
-                console.error('Erro ao buscar tipos:', error);
-            }
+            await this.$store.dispatch('filterByType');
+            this.$store.dispatch('setFilteredItems');
         }
     }
 };
 </script>
 
 <template>
-    <select v-model="selectedType" @change="handleTypeChange">
+    <select v-model="selectedType" @change="updateType">
         <option v-for="type in PokemonTypes" :key="type.name" :value="type.name" :style="{ backgroundColor: type.color.primary }">
             {{ type.name }}
         </option>

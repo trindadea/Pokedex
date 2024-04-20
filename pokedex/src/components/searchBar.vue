@@ -1,17 +1,20 @@
 <script>
-import { mapActions } from 'vuex';
+import { mapMutations } from 'vuex';
 
 export default {
     data() {
         return {
-            query: '', // A variável que armazenará o texto da pesquisa
+            query: ''
         };
     },
 
     methods: {
-        ...mapActions(['filterByQuery']), // Mapeia a ação filterByQuery da store Vuex para o método search deste componente
-        search() {
-            this.filterByQuery(this.query);
+        ...mapMutations(['setQuery']), // Mapeia a mutation setQuery da store o método updateQuery deste componente
+        async updateQuery() {
+            this.setQuery(this.query);
+
+            await this.$store.dispatch('filterByQuery');
+            this.$store.dispatch('setFilteredItems');
         }
     }
 };
@@ -19,6 +22,6 @@ export default {
 
 <template>
     <div>
-        <input type="text" v-model="query" placeholder="Pesquise por Nome ou Número" @input="search">
+        <input type="text" v-model="query" @input="updateQuery" placeholder="Pesquise por Nome ou Número">
     </div>
 </template>

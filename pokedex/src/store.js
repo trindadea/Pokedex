@@ -1,11 +1,11 @@
 import { createStore} from 'vuex';
-import { PokemonList, PokemonByName, PokemonByType, filteredItems, PokemonTypes, getColors } from './pokeUtils.js';
+import { PokemonList, PokemonByQuery, PokemonByType, filteredItems, PokemonTypes, getColors } from './pokeUtils.js';
 
 export default createStore({
     // Propriedades de estado
     state: {
         PokemonList, // Lista de todos os Pokemons (nome e id's)
-        PokemonByName,
+        PokemonByQuery,
         PokemonByType,
         filteredItems,
 
@@ -36,6 +36,16 @@ export default createStore({
 
         setPokemonTypes(state, types) {
             state.PokemonTypes = types;
+        },
+
+        // ------
+
+        setQuery(state, newQuery) {
+            state.query = newQuery;
+        },
+    
+        setSelectedType(state, newType) {
+            state.selectedType = newType;
         }
     },
 
@@ -77,7 +87,7 @@ export default createStore({
         },
     
         // Usadas em componentes
-        filterByQuery({ state, commit }) {
+        async filterByQuery({ state, commit }) {
             // Verifica se a query é um número
             if (!isNaN(state.query)) {
                 // Converte a query para string
@@ -97,7 +107,7 @@ export default createStore({
             } else {
                 // Filtra os itens com base no nome ou espécie (Verifica se o nome do item começa com a query digitada)
                 const filteredByName = state.PokemonList.filter(item => {
-                    return item.name.toLowerCase().startsWith(query.toLowerCase());
+                    return item.name.toLowerCase().startsWith(state.query.toLowerCase());
                 });
         
                 commit('setPokemonByQuery', filteredByName);
@@ -125,19 +135,19 @@ export default createStore({
             }
         },
 
-         setFilteredItems({state, commit}) {
+        setFilteredItems({state, commit}) {
             if (state.query === '' && state.selectedType === '') {
                 // Se não houver query nem tipo selecionado, os pokémons filtrados são todos os pokémons
-                state.filteredItems = state.PokemonList;
+                commit('setFilteredItems', state.PokemonList);
             } else if (state.query !== '' && state.selectedType === '') {
                 // Se houver apenas query e nenhum tipo selecionado, os pokémons filtrados são os pokémons ordenados por nome
-                state.filteredItems = state.PokemonByName;
+                commit('setFilteredItems', state.PokemonByQuery);
             } else if (state.query === '' && state.selectedType !== '') {
                 // Se houver apenas tipo selecionado e nenhum query, os pokémons filtrados são os pokémons ordenados por tipo
-                state.filteredItems = state.PokemonByType;
+                commit('setFilteredItems', state.PokemonByType);
             } else {
                 // Se houver tanto query quanto tipo selecionado, os pokémons filtrados são aqueles presentes em ambas as listas
-                const filteredByName = state.PokemonByName.map(pokemon => pokemon.name);
+                const filteredByName = state.PokemonByQuery.map(pokemon => pokemon.name);
                 const filteredByType = state.PokemonByType.map(pokemon => pokemon.name);
     
                 const filteredItems = state.PokemonList.filter(pokemon => {
@@ -149,4 +159,5 @@ export default createStore({
         }
         
     }
+    
 });
