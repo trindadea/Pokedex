@@ -9,9 +9,9 @@ export default {
     },
 
     methods: {
-        ...mapActions(['filterItems']), // Mapeia a ação filterItems da store Vuex para o método search deste componente
+        ...mapActions(['filterByQuery']), // Mapeia a ação filterByQuery da store Vuex para o método search deste componente
         search() {
-            this.filterItems(this.query);
+            this.filterByQuery(this.query);
         }
     }
 };

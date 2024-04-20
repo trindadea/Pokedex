@@ -2,8 +2,8 @@
     export default {
         name: 'Pokedex arthureiro',
         created() {
-            // Chamar a ação fetchPokemonItems quando o componente a aplicação é iniciada
-            this.$store.dispatch('fetchPokemonItems');
+            // Chamar a ação fetchPokemonList quando o componente a aplicação é iniciada
+            this.$store.dispatch('fetchPokemonList');
             this.$store.dispatch('fetchPokemonTypes');
         }
 }

@@ -8,9 +8,9 @@ export default {
         };
     },
 
-    // Mapeia o estado global pokemonTypes para uma propriedade computada
+    // Mapeia o estado global PokemonTypes para uma propriedade computada
     computed: {
-        ...mapState(['pokemonTypes']),
+        ...mapState(['PokemonTypes']),
     },
     
     methods: {
@@ -40,7 +40,7 @@ export default {
 
 <template>
     <select v-model="selectedType" @change="handleTypeChange">
-        <option v-for="type in pokemonTypes" :key="type.name" :value="type.name" :style="{ backgroundColor: type.color.primary }">
+        <option v-for="type in PokemonTypes" :key="type.name" :value="type.name" :style="{ backgroundColor: type.color.primary }">
             {{ type.name }}
         </option>
     </select>
