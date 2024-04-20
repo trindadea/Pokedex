@@ -7,8 +7,7 @@ export default createStore({
         pokemonItems, // Lista de todos os Pokemons (nome e id's)
         filteredItems: [], // Lista de Pokemons filtrados
 
-        pokemonTypes, //Lista de tipos de Pokemons
-        selectedType: '' //Tipo de Pokemon selecionado
+        pokemonTypes //Lista de tipos de Pokemons
     },
 
     // Mutações são funções que modificam as propriedades de estado de forma síncrona
@@ -24,10 +23,6 @@ export default createStore({
 
         setPokemonTypes(state, types) {
             state.pokemonTypes = types;
-        },
-
-        handleTypeChange(state, type) {
-            state.selectedType = type;
         }
     },
 
