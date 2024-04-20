@@ -1,6 +1,4 @@
 <script>
-import { mapState } from 'vuex';
-
 export default {
     props: {
         pokemon: {
@@ -54,11 +52,10 @@ export default {
         },
 
         backgroundColor() {
-            console.log(this.types)
-            const { pokemonTypes } = this.$store.state;
+            const { PokemonTypes } = this.$store.state;
             
             const primaryType = this.types[0].type.name;
-            const foundType = pokemonTypes.find(type => type.name === primaryType);
+            const foundType = PokemonTypes.find(type => type.name === primaryType);
 
             // Retorna a cor primária correspondente ao tipo do Pokémon
             const backgroundColor = foundType.color.primary

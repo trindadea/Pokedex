@@ -1,28 +1,32 @@
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 
 export default {
-    computed: {
-        ...mapState(['pokemonTypes']),
-    },
-
     data() {
         return {
-        selectedType: '',
+            selectedType: ''
         };
     },
 
+    computed: {
+        ...mapState(['PokemonTypes']),
+    },
+    
     methods: {
-        handleTypeChange() {
-            console.log('Tipo selecionado:', this.selectedType);
-        },
+        ...mapMutations(['setSelectedType']), // Mapeia a mutation setSelectedType da store o método updateType deste componente
+        async updateType() {
+            this.setSelectedType(this.selectedType);
+
+            await this.$store.dispatch('filterByType');
+            this.$store.dispatch('setFilteredItems');
+        }
     }
 };
 </script>
 
 <template>
-    <select v-model="selectedType" @change="handleTypeChange">
-        <option v-for="type in pokemonTypes" :key="type.name" :value="type.name" :style="{ backgroundColor: type.color.primary }">
+    <select v-model="selectedType" @change="updateType">
+        <option v-for="type in PokemonTypes" :key="type.name" :value="type.name" :style="{ backgroundColor: type.color.primary }">
             {{ type.name }}
         </option>
     </select>

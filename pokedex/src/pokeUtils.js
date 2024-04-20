@@ -1,6 +1,9 @@
-export const pokemonItems = [];
+export const PokemonList = [];
+export const PokemonByType = [];
+export const PokemonByQuery = [];
+export const filteredItems = [];
 
-export const pokemonTypes = [];
+export const PokemonTypes = [];
 
 // Dicionário de tipo e cor
 const colours = {

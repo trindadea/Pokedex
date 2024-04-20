@@ -1,7 +1,14 @@
 <script>
     import { useRoute } from 'vue-router';
-
+    import Sprites from '../components/sprites.vue';
+    import AttackMoves from '../components/attackMoves.vue';
+    
     export default {
+        components: {
+            Sprites,
+            AttackMoves
+        },
+
         data() {
             return {
                 name: '',
@@ -49,4 +56,6 @@
             {{ game.version.name }}
         </li>
     </ul>
+    <Sprites :sprites="sprites" />
+    <AttackMoves :moves="moves" />
 </template>
