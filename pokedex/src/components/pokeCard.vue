@@ -9,6 +9,21 @@ export default {
         }
     },
 
+    computed: {
+        // Mapeia o estado global selectedType para a propriedade computada
+        ...mapState(['selectedType']),
+        
+        typeMatches() {
+            // Se nenhum tipo estiver selecionado, retorna true para renderizar o card
+            if (!this.selectedType) {
+                return true
+            }
+            
+            // Verifica se o tipo do Pokémon está na lista de tipos selecionados
+            return this.types.some(type => type.type.name === this.selectedType);
+        }
+    },
+
     data() {
         return {
             id: '',
@@ -54,7 +69,7 @@ export default {
         },
 
         backgroundColor() {
-            console.log(this.types)
+            console.log('alo')
             const { pokemonTypes } = this.$store.state;
             
             const primaryType = this.types[0].type.name;
@@ -72,7 +87,7 @@ export default {
 </script>
 
 <template>
-    <div ref="pokeCard" @click="redirectToPokePage" class="poke-card">
+    <div v-if="typeMatches" ref="pokeCard" @click="redirectToPokePage" class="poke-card">
         <div class="poke-sprite">
             <img :src="this.sprite" alt="Imagem de {{ pokemon.name }}" />
         </div>

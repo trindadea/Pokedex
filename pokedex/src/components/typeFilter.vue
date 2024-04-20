@@ -2,26 +2,27 @@
 import { mapState } from 'vuex';
 
 export default {
-    computed: {
-        ...mapState(['pokemonTypes']),
-    },
-
     data() {
         return {
-        selectedType: '',
+        model_selectedType: ''
         };
     },
 
+    // Mapeia o estado global pokemonTypes para uma propriedade computada
+    computed: {
+        ...mapState(['pokemonTypes', 'selectedType']),
+    },
+    
     methods: {
         handleTypeChange() {
-            console.log('Tipo selecionado:', this.selectedType);
-        },
+            this.$store.commit('handleTypeChange', this.model_selectedType);
+        }
     }
 };
 </script>
 
 <template>
-    <select v-model="selectedType" @change="handleTypeChange">
+    <select v-model="model_selectedType" @change="handleTypeChange">
         <option v-for="type in pokemonTypes" :key="type.name" :value="type.name" :style="{ backgroundColor: type.color.primary }">
             {{ type.name }}
         </option>
