@@ -2,11 +2,14 @@
     import { useRoute } from 'vue-router';
     import Sprites from '../components/sprites.vue';
     import AttackMoves from '../components/attackMoves.vue';
+    import EvolutionChain from '../components/evolutionChain.vue';
+
     
     export default {
         components: {
             Sprites,
-            AttackMoves
+            AttackMoves,
+            EvolutionChain
         },
 
         data() {
@@ -58,4 +61,5 @@
     </ul>
     <Sprites :sprites="sprites" />
     <AttackMoves :moves="moves" />
+    <EvolutionChain />
 </template>
