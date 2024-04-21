@@ -20,13 +20,12 @@ export default {
 
 <template>
     <div class="types-container">
-        <span>Filtre por Tipo</span>
-        <div class="types-list">
+        <span for="typesList">Filtre por Tipo</span>
+        <div id="typesList" class="types-list">
             <div class="poke-type" v-for="type in PokemonTypes" :key="type.name" @click="updateType(type.name)" :style="{ backgroundColor: type.color.primary }">
                 {{ type.name }}
             </div>
         </div>
-        
     </div>
 </template>
 
@@ -35,26 +34,29 @@ export default {
     display: flex;
     flex-direction: column;
     flex: 1;
+}
+
+.types-container span{
+    font-size: 14px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.3);
+    margin-bottom: 8px;
+}
+
+.types-list{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
     background-color: blanchedalmond;
     border: 3px solid #e1b066;
     padding: 1rem;
     border-radius: 8px;
     height: fit-content;
 }
-.types-container span{
-    font-size: 14px;
-    font-weight: bold;
-    color: rgba(0, 0, 0, 0.3);
-    margin-bottom: 1rem;
-}
-.types-list{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
+
 .poke-type{
-    width: 70px;
+    width: 60px;
     height: fit-content;
     font-size: 14px;
     font-weight: bold;

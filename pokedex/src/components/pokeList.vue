@@ -50,9 +50,9 @@ export default {
 
 <template>
     <div class="main-container">
-        <SearchBar />
+        <TypeFilter />
         <div class="main">
-            <TypeFilter />
+            <SearchBar />
             <div class="poke-list" ref="pokeList">
                 <PokeCard v-for="(item, index) in visibleItems" :key="index" :pokemon="item" />
             </div>    
@@ -62,20 +62,22 @@ export default {
 
 <style scoped>
 .main-container{
-    padding: 0 3rem 0rem 1rem;
+    display: flex;
+    flex-direction: row;
+    padding: 0 5rem 0rem 5rem;
+    gap: 1rem;
 }
 
 .main{
     display: flex;
-    flex-direction: row;
-    gap: 8px;
-    margin-top: 1rem;
+    flex: 3;
+    flex-direction: column;
 }
 
 .poke-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    flex: 3;
+    gap: 1rem;
 }
 </style>

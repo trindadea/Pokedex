@@ -22,15 +22,28 @@ export default {
 
 <template>
     <div class="search-bar">
-        <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
-        <input type="text" v-model="query" @input="updateQuery" placeholder="Pesquise por Nome, Número ou Espécie">
+        <span for="searchInput">Pesquise por Nome, Número ou Espécie</span>
+        <div style="position: relative;">
+            <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
+            <input type="text" v-model="query" @input="updateQuery">
+        </div>
     </div>
 </template>
 
 <style scoped>
 .search-bar{
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
 }
+
+.search-bar span{
+    font-size: 14px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.3);
+    margin-bottom: 8px;
+}
+
 .search-bar svg{
     position: absolute;
     top: 8px;
@@ -42,7 +55,7 @@ export default {
 }
 
 .search-bar input{
-    width: 500px;
+    width: calc(100% - 36px);
     padding: 6px 0 6px 36px;
     border-radius: 8px;
     border: solid 3px rgb(195 117 0 / 50%);
@@ -56,9 +69,5 @@ export default {
 .search-bar input:hover{
     outline: none;
     border: solid 3px rgb(195 117 0 / 70%);
-}
-
-.search-bar input::placeholder{
-    color: rgba(0, 0, 0, 0.3);
 }
 </style>
