@@ -2,12 +2,14 @@
 import { mapState } from 'vuex';
 
 import PokeCard from './pokeCard.vue';
-import Header from './header.vue';
+import SearchBar from './searchBar.vue';
+import TypeFilter from './typeFilter.vue';
 
 export default {
     components: {
         PokeCard,
-        Header
+        SearchBar,
+        TypeFilter
     },
 
     data() {
@@ -47,16 +49,33 @@ export default {
 </script>
 
 <template>
-    <Header />
-    <div class="poke-list" ref="pokeList">
-        <PokeCard v-for="(item, index) in visibleItems" :key="index" :pokemon="item" />
+    <div class="main-container">
+        <SearchBar />
+        <div class="main">
+            <TypeFilter />
+            <div class="poke-list" ref="pokeList">
+                <PokeCard v-for="(item, index) in visibleItems" :key="index" :pokemon="item" />
+            </div>    
+        </div>   
     </div>
 </template>
 
 <style scoped>
+.main-container{
+    padding: 0 3rem 0rem 1rem;
+}
+
+.main{
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin-top: 1rem;
+}
+
 .poke-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 30px;
+    justify-content: space-between;
+    flex: 3;
 }
 </style>
