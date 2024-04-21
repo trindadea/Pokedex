@@ -62,12 +62,11 @@ export default {
             
             const primaryType = this.types[0].type.name;
             const foundType = PokemonTypes.find(type => type.name === primaryType);
-
-            // Retorna a cor primária correspondente ao tipo do Pokémon
-            const backgroundColor = foundType.color;
                 
             // Define a cor de fundo da div pokeCard
-            this.$refs.pokeCard.style.backgroundColor = backgroundColor;
+            this.$refs.pokeCard.style.backgroundColor = foundType.color.primary;
+            // Define a cor da borda da div pokeCard
+            this.$refs.pokeCard.style.border = `3px solid ${foundType.color.secondary}`;
         }
     },
 
