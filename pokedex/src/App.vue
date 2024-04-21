@@ -14,3 +14,15 @@
         <router-view></router-view>
     </div>
 </template>
+
+<style>
+*{
+    font-family: sans-serif;
+}
+
+body{
+    background-color: #ffffea;
+    margin: 0;
+    padding: 0;
+}
+</style>

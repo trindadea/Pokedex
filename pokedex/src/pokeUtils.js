@@ -7,24 +7,24 @@ export const PokemonTypes = [];
 
 // Dicionário de tipo e cor
 const colours = {
-    normal: { primary: '#A8A77A', secondary: '#7E7E7E' },
-    fire: { primary: '#EE8130', secondary: '#8C4300' },
-    water: { primary: '#6390F0', secondary: '#004785' },
-    electric: { primary: '#F7D02C', secondary: '#8A7500' },
-    grass: { primary: '#7AC74C', secondary: '#4C7A00' },
-    ice: { primary: '#96D9D6', secondary: '#668F8F' },
-    fighting: { primary: '#C22E28', secondary: '#761515' },
-    poison: { primary: '#A33EA1', secondary: '#6F0F68' },
-    ground: { primary: '#E2BF65', secondary: '#967D36' },
-    flying: { primary: '#A98FF3', secondary: '#6250A9' },
-    psychic: { primary: '#F95587', secondary: '#9C1A4C' },
-    bug: { primary: '#A6B91A', secondary: '#6A7418' },
-    rock: { primary: '#B6A136', secondary: '#7C751E' },
-    ghost: { primary: '#735797', secondary: '#49315A' },
-    dragon: { primary: '#6F35FC', secondary: '#3A1F7A' },
-    dark: { primary: '#705746', secondary: '#3A3939' },
-    steel: { primary: '#B7B7CE', secondary: '#6D6D7E' },
-    fairy: { primary: '#D685AD', secondary: '#80556E' }
+    normal: 'rgba(168, 167, 122, 1)',
+    fire: 'rgba(238, 129, 48, 1)',
+    water: 'rgba(99, 144, 240, 1)',
+    electric: 'rgba(247, 208, 44, 1)',
+    grass: 'rgba(122, 199, 76, 1)',
+    ice: 'rgba(150, 217, 214, 1)',
+    fighting: 'rgba(194, 46, 40, 1)',
+    poison: 'rgba(163, 62, 161, 1)',
+    ground: 'rgba(226, 191, 101, 1)',
+    flying: 'rgba(169, 143, 243, 1)',
+    psychic: 'rgba(249, 85, 135, 1)',
+    bug: 'rgba(166, 185, 26, 1)',
+    rock: 'rgba(182, 161, 54, 1)',
+    ghost: 'rgba(115, 87, 151, 1)',
+    dragon: 'rgba(111, 53, 252, 1)',
+    dark: 'rgba(112, 87, 70, 1)',
+    steel: 'rgba(183, 183, 206, 1)',
+    fairy: 'rgba(214, 133, 173, 1)',
 };
 
 

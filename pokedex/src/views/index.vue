@@ -15,7 +15,3 @@ export default {
     <Banner />
     <PokeList />
 </template>
-
-  
-<style>
-</style>

@@ -78,7 +78,7 @@
     </div>
 </template>
 
-<style>
+<style scoped> 
 .banner{
   display: flex;
 }

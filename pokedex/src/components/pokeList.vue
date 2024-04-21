@@ -53,7 +53,7 @@ export default {
     </div>
 </template>
 
-<style>
+<style scoped>
 .poke-list {
     display: flex;
     flex-wrap: wrap;
