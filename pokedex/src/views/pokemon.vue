@@ -106,7 +106,7 @@
 .poke-banner{
     position: relative;
     justify-content: space-between;
-    height: 60vh;
+    height: 420px;
     overflow-x: clip;
     padding-top: 3rem;
     margin-bottom: 24px;
@@ -123,11 +123,11 @@
 }
 
 .previous{
-    left: 0;
+    left: 30px;
 }
 
 .next{
-    right: 0;
+    right: 30px;
 }
 
 .type{
@@ -198,5 +198,4 @@
     margin-right: 30px;
     z-index: 1;
 }
-    
 </style>

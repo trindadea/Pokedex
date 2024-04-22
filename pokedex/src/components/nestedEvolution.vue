@@ -38,6 +38,7 @@
 <template>
   <div class="evolution-chain">
     <div class="evolution">
+      <div class="circle"></div>
       <img :src="image" alt="Imagem de {{ evolutionChain.species.name }}" />
       <span :style="{color: color}">{{ evolutionChain.species.name.split("-").join(" ") }}</span>
     </div>
@@ -55,6 +56,15 @@
 </template>
 
 <style scoped>
+.circle{
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: rgb(255, 255, 255, 0.5);
+  top: 0;
+}
+
 .evolution-chain{
   display: flex;
   flex-direction: row;
@@ -62,6 +72,7 @@
 }
 
 .evolution{
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -69,12 +80,13 @@
 }
 
 .evolution span{
-  font-size: 1rem;
+  font-size: 24px;
   font-weight: bold;
   text-transform: capitalize;
 }
 
 .evolution img{
+  position: relative;
   width: 150px;
   height: 150px;
   margin-bottom: 1rem;

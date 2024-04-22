@@ -25,9 +25,9 @@ export default {
         }
     },
 
-    mounted() {    
-        window.addEventListener('scroll', this.handleScroll);
-    },
+    // mounted() {    
+    //     window.addEventListener('scroll', this.handleScroll);
+    // },
     
     methods: {
         async loadMoreItems() {
@@ -36,11 +36,15 @@ export default {
 
         handleScroll() {
             const pokeList = this.$refs.pokeList;
-            const scrollPosition = window.scrollY + window.innerHeight;
+            const scrollPosition = pokeList.scrollTop + pokeList.clientHeight;
             const listBottom = pokeList.offsetTop + pokeList.offsetHeight;
 
+            // console.log(pokeList.innerHeight)
+            console.log(scrollPosition)
+            console.log(listBottom)
+
             // Se estiver perto do final da lista, carregar mais itens
-            if (scrollPosition > listBottom - 300) {
+            if (scrollPosition > listBottom) {
                 this.loadMoreItems();
             }
         }
@@ -53,7 +57,7 @@ export default {
         <TypeFilter />
         <div class="main">
             <SearchBar />
-            <div class="poke-list" ref="pokeList">
+            <div class="poke-list" ref="pokeList" @scroll="handleScroll">
                 <PokeCard v-for="(item, index) in visibleItems" :key="index" :pokemon="item" />
             </div>    
         </div>   
@@ -76,5 +80,11 @@ export default {
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 1rem;
+    background-color: blanchedalmond;
+    border: 3px solid #e1b066;
+    border-radius: 8px;
+    padding: 1rem;
+    overflow-y: scroll;
+    height: 80vh;
 }
 </style>
