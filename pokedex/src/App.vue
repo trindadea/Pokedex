@@ -16,6 +16,12 @@
 </template>
 
 <style>
+.container{
+    display: flex;
+    flex-direction: row;
+    padding: 0 10% 0rem 10%;
+}
+
 *{
     font-family: sans-serif;
 }

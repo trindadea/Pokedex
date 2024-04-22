@@ -23,7 +23,8 @@ export default {
         <span for="typesList">Filtre por Tipo</span>
         <div id="typesList" class="types-list">
             <div class="poke-type" v-for="type in PokemonTypes" :key="type.name" @click="updateType(type.name)" :style="{ backgroundColor: type.color.primary }">
-                {{ type.name }}
+                <img :src="'src/assets/types_icon/' + type.name + '.webp'"/>
+                <span>{{ type.name }}</span>
             </div>
         </div>
     </div>
@@ -56,16 +57,29 @@ export default {
 }
 
 .poke-type{
-    width: 60px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width:100px;
     height: fit-content;
-    font-size: 14px;
-    font-weight: bold;
-    text-transform: capitalize;
-    text-align: center;
-    color: white;
     padding: 8px;
     border-radius: 8px;
     cursor: pointer;
     margin-bottom: 1rem;
+    gap: 8px;
+}
+
+.poke-type span{
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: capitalize;
+    color: white;
+    margin: 0;
+}
+
+.poke-type img{
+    width: 16px;
+    height: 16px;
 }
 </style>

@@ -92,7 +92,7 @@ export default {
             <div class="poke-type">
                 <div v-for="(type, index) in this.types" :key="index">
                     <div>
-                        <img :src="'src/assets/types/' + type.type.name + '.webp'"/>
+                        <img :src="'src/assets/types_icon/' + type.type.name + '.webp'"/>
                         <span>{{ type.type.name }}</span>
                     </div>
                 </div>
@@ -115,14 +115,14 @@ export default {
     border-radius: 1rem;
     position: relative;
     overflow: hidden;
-    box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.5);
     cursor: pointer;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .poke-card:hover {
     transform: translateY(-5px);
-    box-shadow: 5px 7px 0px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 8px 8px 0px 0px rgba(0, 0, 0, 0.5);
 }
 
 .poke-sprite{
@@ -193,7 +193,8 @@ export default {
     top: -50px;
     right: -75px;
     rotate: -45deg;
-    opacity: 0.2;
+    opacity: 0.3;
+    filter: brightness(0) invert(1);
 }
 
 </style>

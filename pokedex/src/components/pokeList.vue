@@ -49,7 +49,7 @@ export default {
 </script>
 
 <template>
-    <div class="main-container">
+    <div class="container">
         <TypeFilter />
         <div class="main">
             <SearchBar />
@@ -61,10 +61,7 @@ export default {
 </template>
 
 <style scoped>
-.main-container{
-    display: flex;
-    flex-direction: row;
-    padding: 0 5rem 0rem 5rem;
+.container{
     gap: 1rem;
 }
 
