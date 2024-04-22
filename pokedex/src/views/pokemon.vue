@@ -69,10 +69,15 @@
 
 <template>
     <div ref="pokeBanner" class="container poke-banner" :style="{ backgroundColor: this.color }">
+        <font-awesome-icon class="previous" :icon="['fas', 'angle-left']" />
         <div class="data">
             <h3>Nº {{ $route.params.id }}</h3>
-            <h1>{{ this.name.split('-')[0] }}</h1>
-            <h3 class="subname" v-if="this.name.split('-')[1]">{{ this.name.split('-').slice(1).join(' ') }}</h3>
+            <div style="display: flex; flex-direction: row; align-items: end; gap: 1rem;">
+                <h1>{{ this.name.split('-')[0] }}</h1>
+                <h3 class="subname" v-if="this.name.split('-')[1]">{{ this.name.split('-').slice(1).join(' ') }}</h3>
+            </div>
+
+            <Sprites :sprites="sprites" :color="color" />
         </div>
         <div class="type">
             <img :src="'/src/assets/types/' + this.type + '.webp'"/>
@@ -81,13 +86,13 @@
             <img :src="'/src/assets/pokeball.webp'"/>
         </div>
         <img class="poke-image" :src="this.image" alt="Imagem de {{ this.name }}" />   
+        <font-awesome-icon class="next" :icon="['fas', 'angle-right']" />
     </div>
 
     <div class="container s">
         <EvolutionChain :type="type" :color="color" />
         <Games :games="games" :color="color" :name="name" />
-        <!-- <Sprites :sprites="sprites" :color="color" />
-        <AttackMoves :moves="moves" :color="color" /> -->
+        <AttackMoves :moves="moves" :color="color" />
     </div>
     
 </template>
@@ -105,6 +110,24 @@
     overflow-x: clip;
     padding-top: 3rem;
     margin-bottom: 24px;
+}
+
+.previous,
+.next{
+    position: absolute;
+    color: white;
+    height: 100%;
+    width: 60px;
+    top: 0;
+    cursor: pointer;
+}
+
+.previous{
+    left: 0;
+}
+
+.next{
+    right: 0;
 }
 
 .type{
@@ -161,11 +184,13 @@
 
 .subname{
     font-size: 30px;
+    margin-bottom: 10px !important;
 }
 
 .poke-banner h1{
     margin-top: 25px;
     font-size: 90px;
+    filter: drop-shadow(5px 5px 0px rgba(0, 0, 0, 0.3));
 }
 
 .poke-image{

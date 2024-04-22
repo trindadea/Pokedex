@@ -39,11 +39,11 @@
   <div class="evolution-chain">
     <div class="evolution">
       <img :src="image" alt="Imagem de {{ evolutionChain.species.name }}" />
-      <span :style="{color: color}">{{ evolutionChain.species.name }}</span>
+      <span :style="{color: color}">{{ evolutionChain.species.name.split("-").join(" ") }}</span>
     </div>
     
     <div class="next-evolution-container" v-if="evolutionChain.evolves_to.length > 0">
-      <font-awesome-icon :icon="['fas', 'chevron-right']" :style="{ color: color }" />
+      <font-awesome-icon :icon="['fas', 'chevron-right']" :style="{ color: color } " />
       <div class="next-evolution">
         <div v-for="(evolutionTo, index) in evolutionChain.evolves_to" :key="index">
           <NestedEvolution :evolutionChain="evolutionTo" :color="color"/>
@@ -88,8 +88,8 @@
 }
 
 .next-evolution-container svg{
-  width: 24px;
-  height: 24px;
+  width: 48px;
+  height: 48px;
 }
 
 .next-evolution{
