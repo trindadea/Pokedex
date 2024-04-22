@@ -12,7 +12,8 @@ export default createStore({
         PokemonTypes, //Lista de tipos de Pokemons
 
         query: '',
-        selectedType: ''
+        selectedType: '',
+        selectedLanguage: 'en',
     },
 
     // Mutações são funções que modificam as propriedades de estado de forma síncrona

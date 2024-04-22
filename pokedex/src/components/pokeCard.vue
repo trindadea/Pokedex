@@ -12,7 +12,8 @@ export default {
             id: '',
             species: '',
             types: [], 
-            sprite: ''
+            sprite: '',
+            names: {}
         };
     },
 
@@ -48,8 +49,50 @@ export default {
                 this.sprite = json.sprites.other['official-artwork'].front_default;
                 
                 this.backgroundColor()
+
+                await this.fetchLocation(name);
+                console.log(this.names)
             } catch (error) {
                 console.error('Erro ao buscar dados:', error);
+            }
+        },
+
+        async fetchLocation(name) {
+            try {
+                const names = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name}/`);
+                const data = await names.json();
+
+                // Mapeia os resultados para extrair os nomes nas línguas desejadas
+                const filteredNames = data.names.map(entry => {
+                    const languageName = entry.language.name;
+
+                    // Mapeia as línguas desejadas para os nomes correspondentes
+                    const languageMap = {
+                        'en': 'en',
+                        'es': 'es',
+                        'fr': 'fr',
+                        'ja': 'ja-Hrkt',
+                    };
+
+                    // Verifica se a língua atual está no mapeamento
+                    const mappedLanguage = languageMap[languageName];
+
+                    // Se estiver no mapeamento, armazena o nome correspondente
+                    if (mappedLanguage) {
+                        return {
+                            location: mappedLanguage, // Localização da língua
+                            name: entry.name // Nome correspondente
+                        };
+                    }
+
+                    // Se não estiver no mapeamento, retorna nulo
+                    return null;
+                }).filter(entry => entry !== null); // Remove as entradas nulas
+
+                // Atualiza o estado names com os resultados obtidos
+                this.names = filteredNames;
+            } catch (error) {
+                console.error('Erro ao buscar nomes em diferentes línguas:', error);
             }
         },
 

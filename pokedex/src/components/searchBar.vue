@@ -21,7 +21,7 @@ export default {
 </script>
 
 <template>
-    <div class="search-bar">
+    <div @click="teste" class="search-bar">
         <span for="searchInput">Pesquise por Nome, Número ou Espécie</span>
         <div style="position: relative;">
             <font-awesome-icon :icon="['fas', 'magnifying-glass']" />

@@ -4,13 +4,16 @@
     import AttackMoves from '../components/attackMoves.vue';
     import EvolutionChain from '../components/evolutionChain.vue';
     import Games from '../components/games.vue';
+    import Languages from '../components/languages.vue';
+
     
     export default {
         components: {
             Sprites,
             AttackMoves,
             EvolutionChain,
-            Games
+            Games,
+            Languages
         },
 
         data() {
@@ -68,6 +71,7 @@
 </script>
 
 <template>
+    <Languages />
     <div ref="pokeBanner" class="container poke-banner" :style="{ backgroundColor: this.color }">
         <font-awesome-icon class="previous" :icon="['fas', 'angle-left']" />
         <div class="data">
