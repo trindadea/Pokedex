@@ -3,13 +3,14 @@
     import Sprites from '../components/sprites.vue';
     import AttackMoves from '../components/attackMoves.vue';
     import EvolutionChain from '../components/evolutionChain.vue';
-
+    import Games from '../components/games.vue';
     
     export default {
         components: {
             Sprites,
             AttackMoves,
-            EvolutionChain
+            EvolutionChain,
+            Games
         },
 
         data() {
@@ -20,7 +21,8 @@
                 moves: [],
                 evoluions: [],
                 games: [],
-                type: ''
+                type: '',
+                color: ''
             };
         },
 
@@ -45,28 +47,28 @@
                     this.games = json.game_indices
                     this.type = json.types[0].type.name
 
-                    this.backgroundColor()
+                    this.setColor()
 
                 } catch (error) {
                     console.error('Erro ao buscar dados:', error);
                 }
             },
 
-            backgroundColor() {
+            setColor() {
                 const { PokemonTypes } = this.$store.state;
-                
+
                 const primaryType = this.type;
                 const foundType = PokemonTypes.find(type => type.name === primaryType);
-                    
+
                 // Define a cor de fundo da div pokeBanner
-                this.$refs.pokeBanner.style.backgroundColor = foundType.color.primary;
+                this.color = foundType.color.primary;
             }
         }
     }
 </script>
 
 <template>
-    <div ref="pokeBanner" class="container poke-banner">
+    <div ref="pokeBanner" class="container poke-banner" :style="{ backgroundColor: this.color }">
         <div class="data">
             <h3>Nº {{ $route.params.id }}</h3>
             <h1>{{ this.name.split('-')[0] }}</h1>
@@ -82,15 +84,10 @@
     </div>
 
     <div class="container s">
-        <EvolutionChain :type="this.type"/>
-
-        <ul>
-            <li v-for="(game, index) in this.games" :key="index">
-                {{ game.version.name }}
-            </li>
-        </ul>
-        <Sprites :sprites="sprites" />
-        <!-- <AttackMoves :moves="moves" /> -->
+        <EvolutionChain :type="type" :color="color" />
+        <Games :games="games" :color="color" :name="name" />
+        <!-- <Sprites :sprites="sprites" :color="color" />
+        <AttackMoves :moves="moves" :color="color" /> -->
     </div>
     
 </template>
@@ -98,6 +95,7 @@
 <style scoped>
 .container.s{
   flex-direction: column;
+  gap: 24px;
 }
 
 .poke-banner{
@@ -106,6 +104,7 @@
     height: 60vh;
     overflow-x: clip;
     padding-top: 3rem;
+    margin-bottom: 24px;
 }
 
 .type{

@@ -10,7 +10,7 @@
 
         props: {
             name: String,
-            type: String
+            color: String
         },
 
         computed: {
@@ -45,37 +45,27 @@
 
             this.evolutionChain = evolutionChainData;
 
-            await this.defineColors();
             } catch (error) {
             console.error('Error:', error);
-            }
-        },
-
-        methods: {
-            async defineColors() {
-                const { PokemonTypes } = this.$store.state;
-                    
-                const primaryType = this.type;
-                const foundType = PokemonTypes.find(type => type.name === primaryType);
-                    
-                // Define a cor do do nome chainName
-                this.$refs.chainName.style.color = foundType.color.primary;
-                // Define estilização da div chainContainer
-                this.$refs.chainContainer.style.border = `3px solid ${foundType.color.primary}`;
-                this.$refs.chainContainer.style.backgroundColor = foundType.color.primary.replace(", 1)", ", 0.1)");
             }
         }
     };
 </script>
 
 <template>
-    <span ref="chainName">Cadeia de Evoluções</span>
-    <div ref="chainContainer" class="evolution-chain-container">
-      <div v-if="evolutionChain.chain">
-        <!-- Componente recursivo -->
-        <NestedEvolution :evolutionChain="evolutionChain.chain" :type="this.type"/>
-      </div>
+    <div>
+        <span ref="chainName" :style="{color: color}">Cadeia de Evoluções</span>
+        <div ref="chainContainer" class="evolution-chain-container" :style="{
+                backgroundColor: color.replace(', 1)', ', 0.3)'),
+                border: `3px solid ${color}`
+            }">
+        <div v-if="evolutionChain.chain">
+            <!-- Componente recursivo -->
+            <NestedEvolution :evolutionChain="evolutionChain.chain" :color="this.color"/>
+        </div>
+        </div>
     </div>
+    
 </template>
 
 <style scoped>

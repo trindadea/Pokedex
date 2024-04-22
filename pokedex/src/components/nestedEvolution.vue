@@ -4,7 +4,7 @@
 
     props: {
       evolutionChain: Object,
-      type: String
+      color: String
     },
 
     data() {
@@ -27,23 +27,8 @@
           const json = await response.json();
           this.image = json.sprites.other["official-artwork"].front_default;
 
-          await this.defineColors();
         } catch (error) {
           console.error('Erro ao buscar dados:', error);
-        }
-      },
-
-      async defineColors() {
-        const { PokemonTypes } = this.$store.state;
-        
-        const primaryType = this.type;
-        const foundType = PokemonTypes.find(type => type.name === primaryType);
-            
-        // Define a cor do nome pokemonName
-        this.$refs.pokemonName.style.color = foundType.color.primary;
-        // Define a cor do ícone de Next
-        if(this.$refs.nextIcon) {
-          this.$refs.nextIcon.$el.style.color = foundType.color.primary;
         }
       }
     }
@@ -54,14 +39,14 @@
   <div class="evolution-chain">
     <div class="evolution">
       <img :src="image" alt="Imagem de {{ evolutionChain.species.name }}" />
-      <span ref="pokemonName">{{ evolutionChain.species.name }}</span>
+      <span :style="{color: color}">{{ evolutionChain.species.name }}</span>
     </div>
     
     <div class="next-evolution-container" v-if="evolutionChain.evolves_to.length > 0">
-      <font-awesome-icon ref="nextIcon" :icon="['fas', 'chevron-right']" />
+      <font-awesome-icon :icon="['fas', 'chevron-right']" :style="{ color: color }" />
       <div class="next-evolution">
         <div v-for="(evolutionTo, index) in evolutionChain.evolves_to" :key="index">
-          <NestedEvolution :evolutionChain="evolutionTo" :type="this.type"/>
+          <NestedEvolution :evolutionChain="evolutionTo" :color="color"/>
         </div>
       </div>
       
