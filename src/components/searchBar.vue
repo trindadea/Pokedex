@@ -40,9 +40,9 @@ export default {
 }
 
 .search-bar span{
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
-    color: rgba(0, 0, 0, 0.3);
+    color: rgb(225 176 102);
     margin-bottom: 8px;
 }
 

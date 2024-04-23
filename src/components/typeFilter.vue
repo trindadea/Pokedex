@@ -47,9 +47,9 @@ export default {
 }
 
 .types-container span{
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
-    color: rgba(0, 0, 0, 0.3);
+    color: rgb(225 176 102);
     margin-bottom: 8px;
 }
 
@@ -77,6 +77,7 @@ export default {
     cursor: pointer;
     margin-bottom: 1rem;
     gap: 8px;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
 }
 
 .poke-type span{

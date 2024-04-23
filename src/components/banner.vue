@@ -36,14 +36,10 @@
                 return;
             }
 
-            // Obtém um índice aleatório
             const randomIndex = Math.floor(Math.random() * this.items.length);
-
-            // Pega nome do pokemon aleatório
             this.random_poke_name = this.items[randomIndex].name
-
-            // Obtém o URL do Pokémon aleatório
             const randomPokemonUrl = this.items[randomIndex].url;
+
             try {
                 const response = await fetch(randomPokemonUrl);
                 if (!response.ok) {
@@ -51,7 +47,6 @@
                 }
                 const pokemonData = await response.json();
 
-                // Pega sprite do pokemon aleatório
                 this.random_poke_sprite = pokemonData.sprites.front_default
             } catch (error) {
                 console.error('Erro ao buscar dados do Pokémon:', error);
@@ -62,31 +57,30 @@
 </script>
 
 <template>
-    <div class="banner">
+    <div class="container banner">
       
       <div class="banner-att">
-        <span>POKEDEX</span>
-        <div class="banner-att name">
-          <span>{{ random_poke_name }}</span>
-        </div>
+        <img src="../assets/pokedex.webp">
       </div>
 
-      <div v-if="random_poke_sprite">
-        <img :src="random_poke_sprite" alt="Imagem do Pokémon" />
-      </div>
+      <img class="pikachu" src="../assets/pikachu.png">
       
     </div>
 </template>
 
 <style scoped> 
 .banner{
-  display: flex;
+  position: relative;
+  justify-content: space-between;
+  height: 420px;
+  overflow-x: clip;
+  padding-top: 3rem;
+  margin-bottom: 24px;
+  background-color: yellow;
 }
 
-.banner-att,
-.banner-att .name{
-  display: flex;
-  flex-direction: column;
+.pikachu{
+  margin-bottom: 3rem;
 }
 
 </style>
