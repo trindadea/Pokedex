@@ -1,10 +1,12 @@
 <script>
 import { mapMutations } from 'vuex';
+import { indexTranslation } from '../translation/translation.js';
 
 export default {
     data() {
         return {
-            query: ''
+            query: '',
+            indexTranslation
         };
     },
 
@@ -22,7 +24,7 @@ export default {
 
 <template>
     <div @click="teste" class="search-bar">
-        <span for="searchInput">Pesquise por Nome, Número ou Espécie</span>
+        <span for="searchInput">{{ indexTranslation[this.$store.state.selectedLanguage].searchLabel }}</span>
         <div style="position: relative;">
             <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
             <input type="text" v-model="query" @input="updateQuery">

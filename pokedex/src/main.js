@@ -20,7 +20,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: '/', component: Index },
-    { path: '/pokemon/:id', component: PokemonPage }
+    {path: '/pokemon/:id', component: PokemonPage}
   ]
 });
 

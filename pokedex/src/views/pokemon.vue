@@ -6,6 +6,7 @@
     import Games from '../components/games.vue';
     import Languages from '../components/languages.vue';
 
+    import { number } from '../translation/translation.js';
     
     export default {
         components: {
@@ -25,7 +26,13 @@
                 evoluions: [],
                 games: [],
                 type: '',
-                color: ''
+                color: '',
+
+                // Nomes traduzidos
+                names: {},
+
+                // Objtos de tradução
+                number
             };
         },
 
@@ -50,10 +57,43 @@
                     this.games = json.game_indices
                     this.type = json.types[0].type.name
 
+                    await this.fetchLocation(json.species.name)
+
                     this.setColor()
 
                 } catch (error) {
                     console.error('Erro ao buscar dados:', error);
+                }
+            },
+
+            async fetchLocation(species) {
+                try {
+                    const names = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${species}/`);
+                    const data = await names.json();
+
+                    // Mapeia os resultados para extrair os nomes nas línguas desejadas
+                    const filteredNames = data.names.map(entry => {
+                        const languageName = entry.language.name;
+
+                        // Mapeia as línguas desejadas para os nomes correspondentes
+                        const languageMap = {
+                            'pt': 'pt',
+                            'en': 'en',
+                            'es': 'es',
+                            'fr': 'fr',
+                            'ja': 'ja',
+                        };
+
+                        // Verifica se a língua atual está no mapeamento
+                        const mappedLanguage = languageMap[languageName];
+
+                        // Se estiver no mapeamento, armazena o nome correspondente
+                        if (mappedLanguage) this.names[mappedLanguage] = entry.name
+                    })
+
+                    this.names.pt = this.names.en;
+                } catch (error) {
+                    console.error('Erro ao buscar nomes em diferentes línguas:', error);
                 }
             },
 
@@ -65,6 +105,15 @@
 
                 // Define a cor de fundo da div pokeBanner
                 this.color = foundType.color.primary;
+            },
+
+            redirect(page) {
+                const id = parseInt(this.$route.params.id);
+
+                const newId = page === 'next' ? id + 1 : id - 1;
+                const newRoute = `/pokemon/${newId}`;
+
+                window.location.href = newRoute;
             }
         }
     }
@@ -73,11 +122,11 @@
 <template>
     <Languages />
     <div ref="pokeBanner" class="container poke-banner" :style="{ backgroundColor: this.color }">
-        <font-awesome-icon class="previous" :icon="['fas', 'angle-left']" />
+        <font-awesome-icon @click="redirect('prev')" class="previous" :icon="['fas', 'angle-left']" />
         <div class="data">
-            <h3>Nº {{ $route.params.id }}</h3>
+            <h3>{{ number[this.$store.state.selectedLanguage] }} {{ $route.params.id }}</h3>
             <div style="display: flex; flex-direction: row; align-items: end; gap: 1rem;">
-                <h1>{{ this.name.split('-')[0] }}</h1>
+                <h1>{{ names[this.$store.state.selectedLanguage] }}</h1>
                 <h3 class="subname" v-if="this.name.split('-')[1]">{{ this.name.split('-').slice(1).join(' ') }}</h3>
             </div>
 
@@ -90,7 +139,7 @@
             <img :src="'/src/assets/pokeball.webp'"/>
         </div>
         <img class="poke-image" :src="this.image" alt="Imagem de {{ this.name }}" />   
-        <font-awesome-icon class="next" :icon="['fas', 'angle-right']" />
+        <font-awesome-icon @click="redirect('next')" class="next" :icon="['fas', 'angle-right']" />
     </div>
 
     <div class="container s">

@@ -9,12 +9,16 @@
 
     data() {
       return {
-        image: ''
+        image: '',
+        
+        // Nomes traduzidos
+        names: {}
       };
     },
 
     mounted() {
       this.fetchImage();
+      this.fetchLocation();
     },
 
     methods: {
@@ -30,7 +34,38 @@
         } catch (error) {
           console.error('Erro ao buscar dados:', error);
         }
-      }
+      },
+
+      async fetchLocation() {
+            try {
+                const names = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${this.evolutionChain.species.name}/`);
+                const data = await names.json();
+
+                // Mapeia os resultados para extrair os nomes nas línguas desejadas
+                const filteredNames = data.names.map(entry => {
+                    const languageName = entry.language.name;
+
+                    // Mapeia as línguas desejadas para os nomes correspondentes
+                    const languageMap = {
+                        'pt': 'pt',
+                        'en': 'en',
+                        'es': 'es',
+                        'fr': 'fr',
+                        'ja': 'ja',
+                    };
+
+                    // Verifica se a língua atual está no mapeamento
+                    const mappedLanguage = languageMap[languageName];
+
+                    // Se estiver no mapeamento, armazena o nome correspondente
+                    if (mappedLanguage) this.names[mappedLanguage] = entry.name
+                })
+
+                this.names.pt = this.names.en;
+            } catch (error) {
+                console.error('Erro ao buscar nomes em diferentes línguas:', error);
+            }
+        },
     }
   };
 </script>
@@ -40,7 +75,7 @@
     <div class="evolution">
       <div class="circle"></div>
       <img :src="image" alt="Imagem de {{ evolutionChain.species.name }}" />
-      <span :style="{color: color}">{{ evolutionChain.species.name.split("-").join(" ") }}</span>
+      <span :style="{color: color}">{{ names[this.$store.state.selectedLanguage] }}</span>
     </div>
     
     <div class="next-evolution-container" v-if="evolutionChain.evolves_to.length > 0">
@@ -77,6 +112,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: fit-content;
+  align-self: center;
 }
 
 .evolution span{
@@ -107,6 +144,7 @@
 .next-evolution{
   display: flex;
   flex-wrap: wrap;
+  gap: 1rem;
 }
 
 </style>

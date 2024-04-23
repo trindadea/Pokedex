@@ -1,4 +1,6 @@
 <script>
+    import { pokemonPageTranslation } from '../translation/translation.js';
+
     export default {
     props: {
         sprites: Object
@@ -6,8 +8,9 @@
 
     data() {
         return {
-        currentSpriteFront: null,
-        currentSpriteBack: null
+            currentSpriteFront: null,
+            currentSpriteBack: null,
+            pokemonPageTranslation
         }
     },
     
@@ -58,22 +61,22 @@
             <div class="gender-buttons" v-if="sprites.front_female">
                 <div class="gender male">
                     <button @click="toggleMale"><font-awesome-icon :icon="['fas', 'venus']" /></button>
-                    <span>Macho</span>
+                    <span>{{ pokemonPageTranslation[this.$store.state.selectedLanguage].male }}</span>
                 </div>
                 <div class="gender female">
                     <button @click="toggleFemale"><font-awesome-icon :icon="['fas', 'venus']" /></button>
-                    <span>Fêmea</span>
+                    <span>{{ pokemonPageTranslation[this.$store.state.selectedLanguage].female }}</span>
                 </div>
             </div>
 
             <div class="variant-buttons" v-if="sprites.front_shiny">
                 <div class="gender default" v-if="!sprites.front_female">
                     <button @click="toggleMale"><font-awesome-icon :icon="['far', 'star']" /></button>
-                    <span>Padrão</span>
+                    <span>{{ pokemonPageTranslation[this.$store.state.selectedLanguage].default }}</span>
                 </div>
                 <div class="gender shiny">
                     <button @click="toggleShiny"><font-awesome-icon :icon="['fas', 'star']" /></button>
-                    <span>Brilhante</span>
+                    <span>{{ pokemonPageTranslation[this.$store.state.selectedLanguage].shiny }}</span>
                 </div>
             </div>
         </div>
@@ -131,6 +134,7 @@
     font-size: 14px;
     font-weight: bold;
     color: white;
+    text-transform: capitalize;
 }
 
 .male button{

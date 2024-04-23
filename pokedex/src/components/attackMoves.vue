@@ -1,7 +1,10 @@
 <script>
 import { defineComponent } from 'vue';
+import Description from './attackDesc.vue';
 import { Carousel, Navigation, Slide } from 'vue3-carousel';
 import 'vue3-carousel/dist/carousel.css';
+
+import { pokemonPageTranslation } from '../translation/translation.js';
 
 export default defineComponent({
   name: 'MyCarousel',
@@ -10,6 +13,7 @@ export default defineComponent({
     Carousel,
     Slide,
     Navigation,
+    Description
   },
 
   props: {
@@ -38,14 +42,17 @@ export default defineComponent({
           snapAlign: 'center',
         },
       },
+
+      pokemonPageTranslation
     };
-  },
+  }
+
 });
 </script>
 
 <template>
   <div>
-    <span :style="{color: color}">Habilidades</span>
+    <span :style="{color: color}">{{ pokemonPageTranslation[this.$store.state.selectedLanguage].abilities }}</span>
     <div class="carousel-container">
       <Carousel :settings="settings" :breakpoints="breakpoints">
         <Slide v-for="(elemento, index) in moves" :key="index">
@@ -53,9 +60,8 @@ export default defineComponent({
               backgroundColor: color.replace(', 1)', ', 0.3)'),
               border: `3px solid ${color}`
             }">
-            <p>{{ elemento.move.name.split('-').join(' ') }}</p>
-            <p :style="{color: color}">Aprendido no Nível {{ elemento.version_group_details[0].level_learned_at }}</p>
-            <!-- <Description :url="elemento.move.url" /> -->
+            <Description :url="elemento.move.url" />
+            <p :style="{color: color}">{{ pokemonPageTranslation[this.$store.state.selectedLanguage].learnedByLevel }} {{ elemento.version_group_details[0].level_learned_at }}</p>
           </div>
         </Slide>
 

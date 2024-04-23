@@ -13,7 +13,7 @@ export default createStore({
 
         query: '',
         selectedType: '',
-        selectedLanguage: 'en',
+        selectedLanguage: 'pt',
     },
 
     // Mutações são funções que modificam as propriedades de estado de forma síncrona
@@ -47,6 +47,11 @@ export default createStore({
     
         setSelectedType(state, newType) {
             state.selectedType = newType;
+        },
+
+        setLanguage(state, language) {
+            console.log(language)
+            state.selectedLanguage = language;
         }
     },
 

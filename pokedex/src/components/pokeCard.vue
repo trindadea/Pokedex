@@ -1,4 +1,6 @@
 <script>
+import { typesTranslation, number } from '../translation/translation.js';
+
 export default {
     props: {
         pokemon: {
@@ -13,7 +15,11 @@ export default {
             species: '',
             types: [], 
             sprite: '',
-            names: {}
+            names: {},
+
+            // Objetos de tradução
+            typesTranslation,
+            number
         };
     },
 
@@ -50,16 +56,16 @@ export default {
                 
                 this.backgroundColor()
 
-                await this.fetchLocation(name);
+                await this.fetchLocation();
                 console.log(this.names)
             } catch (error) {
                 console.error('Erro ao buscar dados:', error);
             }
         },
 
-        async fetchLocation(name) {
+        async fetchLocation() {
             try {
-                const names = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name}/`);
+                const names = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${this.species}/`);
                 const data = await names.json();
 
                 // Mapeia os resultados para extrair os nomes nas línguas desejadas
@@ -68,29 +74,21 @@ export default {
 
                     // Mapeia as línguas desejadas para os nomes correspondentes
                     const languageMap = {
+                        'pt': 'pt',
                         'en': 'en',
                         'es': 'es',
                         'fr': 'fr',
-                        'ja': 'ja-Hrkt',
+                        'ja': 'ja',
                     };
 
                     // Verifica se a língua atual está no mapeamento
                     const mappedLanguage = languageMap[languageName];
 
                     // Se estiver no mapeamento, armazena o nome correspondente
-                    if (mappedLanguage) {
-                        return {
-                            location: mappedLanguage, // Localização da língua
-                            name: entry.name // Nome correspondente
-                        };
-                    }
+                    if (mappedLanguage) this.names[mappedLanguage] = entry.name
+                })
 
-                    // Se não estiver no mapeamento, retorna nulo
-                    return null;
-                }).filter(entry => entry !== null); // Remove as entradas nulas
-
-                // Atualiza o estado names com os resultados obtidos
-                this.names = filteredNames;
+                this.names.pt = this.names.en;
             } catch (error) {
                 console.error('Erro ao buscar nomes em diferentes línguas:', error);
             }
@@ -120,9 +118,8 @@ export default {
     <div ref="pokeCard" @click="redirectToPokePage" class="poke-card">
 
         <img class="pokeball" src="../assets/pokeball.webp" />
-
         
-        <span class="poke-number">nº {{ this.id }}</span>
+        <span class="poke-number">{{ number[this.$store.state.selectedLanguage] }} {{ this.id }}</span>
 
         <div class="poke-sprite">
             <img :src="this.sprite" alt="Imagem de {{ pokemon.name }}" />
@@ -130,13 +127,15 @@ export default {
 
 
         <div class="poke-data">
-            <span :class="{ 'poke-name': true, 's': hasSubname }">{{ pokemon.name.split('-').join(' ') }}</span>
+            <span v-if="names[this.$store.state.selectedLanguage]" :class="{ 'poke-name': true, 's': hasSubname }">
+                {{ names[this.$store.state.selectedLanguage].split("-").join(" ") }} {{ pokemon.name.split('-').slice(1).join(" ") }}
+            </span>            
             <!-- <div>{{ this.species }}</div> -->
             <div class="poke-type">
                 <div v-for="(type, index) in this.types" :key="index">
                     <div>
                         <img :src="'src/assets/types_icon/' + type.type.name + '.webp'"/>
-                        <span>{{ type.type.name }}</span>
+                        <span>{{ typesTranslation[this.$store.state.selectedLanguage][type.type.name] }}</span>
                     </div>
                 </div>
             </div>

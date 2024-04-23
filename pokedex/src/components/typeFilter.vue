@@ -1,9 +1,18 @@
 <script>
 import { mapState, mapMutations } from 'vuex';
+import { typesTranslation, indexTranslation } from '../translation/translation.js';
 
 export default {
     computed: {
         ...mapState(['PokemonTypes']),
+    },
+
+    data() {
+        return {
+            // Objetos de tradução
+            typesTranslation,
+            indexTranslation
+        };
     },
     
     methods: {
@@ -20,11 +29,11 @@ export default {
 
 <template>
     <div class="types-container">
-        <span for="typesList">Filtre por Tipo</span>
+        <span for="typesList">{{ indexTranslation[this.$store.state.selectedLanguage].filterLabel }}</span>
         <div id="typesList" class="types-list">
             <div class="poke-type" v-for="type in PokemonTypes" :key="type.name" @click="updateType(type.name)" :style="{ backgroundColor: type.color.primary }">
                 <img :src="'src/assets/types_icon/' + type.name + '.webp'"/>
-                <span>{{ type.name }}</span>
+                <span>{{ typesTranslation[this.$store.state.selectedLanguage][type.name] }}</span>
             </div>
         </div>
     </div>

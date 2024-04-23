@@ -1,4 +1,6 @@
 <script>
+    import { pokemonPageTranslation } from '../translation/translation.js';
+
     export default {
         props: {
             games: Array,
@@ -52,7 +54,8 @@
                     "violet": "rgba(238, 130, 238, 0.7)",
                     "the-teal-mask": "rgba(0, 128, 128, 0.7)",
                     "the-indigo-disk": "rgba(75, 0, 130, 0.7)"
-                }
+                },
+                pokemonPageTranslation
             }
         },
 
@@ -81,7 +84,7 @@
 
 <template>
     <div>
-        <span :style="{ color: color}">Jogos em que esse Pokémon aparece</span>
+        <span :style="{ color: color}">{{ pokemonPageTranslation[this.$store.state.selectedLanguage].games }}</span>
         <div class="game-list">
             <div v-for="(game, index) in games" :key="index" class="game" 
             :style="{ 

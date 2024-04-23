@@ -1,10 +1,8 @@
 <script>
     export default {
         methods: {
-            // Método para selecionar o idioma e emitir um evento
             selectLanguage(languageCode) {
-                // Emitir evento para informar que o idioma foi selecionado
-                this.$emit('language-selected', languageCode);
+                this.$store.commit('setLanguage', languageCode);
             }
         }
     };
@@ -12,7 +10,7 @@
 
 <template>
     <div class="languages">
-        <img src="../assets/flags/pt-br.png" @click="selectLanguage('pt-br')">
+        <img src="../assets/flags/pt-br.png" @click="selectLanguage('pt')">
         <img src="../assets/flags/en.png" @click="selectLanguage('en')">
         <img src="../assets/flags/es.png" @click="selectLanguage('es')">
         <img src="../assets/flags/fr.png" @click="selectLanguage('fr')">

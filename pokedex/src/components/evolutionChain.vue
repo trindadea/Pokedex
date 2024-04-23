@@ -3,9 +3,11 @@
     import { mapState } from 'vuex';
     import NestedEvolution from './nestedEvolution.vue';
 
+    import { pokemonPageTranslation } from '../translation/translation.js';
+
     export default {
         components: {
-            NestedEvolution,
+            NestedEvolution
         },
 
         props: {
@@ -19,7 +21,8 @@
 
         data() {
             return {
-                evolutionChain: []
+                evolutionChain: [],
+                pokemonPageTranslation
             };
         },
 
@@ -27,26 +30,25 @@
             const route = useRoute();
 
             try {
-            const speciesJson = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${route.params.id}/`);
-            if (!speciesJson.ok) {
-                throw new Error('Falha ao buscar dados da Espécie');
-            }
-            const speciesData = await speciesJson.json();
+                const speciesJson = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${route.params.id}/`);
+                
+                if (!speciesJson.ok) {
+                    throw new Error('Falha ao buscar dados da Espécie');
+                }
 
-            const evolutionChainUrl = speciesData.evolution_chain.url;
+                const speciesData = await speciesJson.json();
+                const evolutionChainUrl = speciesData.evolution_chain.url;
+                const evolutionChainJson = await fetch(evolutionChainUrl);
 
+                if (!evolutionChainJson.ok) {
+                    throw new Error('Faha ao buscar dados da cadeia de Evolução');
+                }
 
-
-            const evolutionChainJson = await fetch(evolutionChainUrl);
-            if (!evolutionChainJson.ok) {
-                throw new Error('Faha ao buscar dados da cadeia de Evolução');
-            }
-            const evolutionChainData = await evolutionChainJson.json();
-
-            this.evolutionChain = evolutionChainData;
+                const evolutionChainData = await evolutionChainJson.json();
+                this.evolutionChain = evolutionChainData;
 
             } catch (error) {
-            console.error('Error:', error);
+                console.error('Error:', error);
             }
         }
     };
@@ -54,7 +56,7 @@
 
 <template>
     <div>
-        <span ref="chainName" :style="{color: color}">Cadeia de Evoluções</span>
+        <span ref="chainName" :style="{color: color}">{{ pokemonPageTranslation[this.$store.state.selectedLanguage].evolutionChain }}</span>
         <div ref="chainContainer" class="evolution-chain-container" :style="{
                 backgroundColor: color.replace(', 1)', ', 0.3)'),
                 border: `3px solid ${color}`
